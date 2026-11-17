@@ -1,0 +1,59 @@
+#nf-hero {
+  position: relative;
+  margin: -1rem var(--nf-gutter) 2rem;
+  height: min(46vw, 78vh);
+  border-radius: var(--nf-radius-hero);
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .06);
+}
+#nf-hero .nf-slide {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center top;
+  opacity: 0; transition: opacity .8s ease; pointer-events: none;
+}
+#nf-hero .nf-slide.nf-active { opacity: 1; pointer-events: auto; }
+#nf-hero .nf-slide::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, rgba(0,0,0,.85) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,0) 70%),
+    linear-gradient(to top, rgba(20,20,20,.9) 0%, rgba(20,20,20,0) 35%);
+}
+.nf-hero-content {
+  position: absolute; left: 2.6%; bottom: 7.5%;
+  width: min(45%, 620px); z-index: 1;
+}
+.nf-hero-logo { display: block; max-width: 100%; max-height: 180px; margin-bottom: 1.2rem; }
+.nf-hero-title { font-size: clamp(2rem, 5vw, 4.5rem); font-weight: 700; margin: 0 0 1rem; line-height: 1.05; }
+.nf-hero-meta { display: flex; flex-wrap: wrap; align-items: center; font-weight: 600; font-size: 1.05rem; margin-bottom: 1.2rem; }
+.nf-hero-meta span + span::before { content: '•'; margin: 0 .55rem; color: var(--nf-muted); font-size: .7em; vertical-align: middle; }
+.nf-hero-overview {
+  font-size: 1.05rem; line-height: 1.4; margin: 0 0 1.4rem;
+  display: none; /* Netflix does not show the synopsis in the hero */
+}
+.nf-hero-actions { display: flex; gap: .8rem; }
+.nf-btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  border: 0; border-radius: 999px; padding: .75rem 1.9rem;
+  font: 700 1.2rem var(--nf-font); cursor: pointer; transition: background-color var(--nf-ease);
+}
+.nf-btn svg { margin-left: -.5rem; }
+.nf-btn-play { background: #fff; color: #000; }
+.nf-btn-play:hover { background: var(--nf-light-hover); }
+.nf-btn-info { background: var(--nf-pill); color: #fff; backdrop-filter: blur(6px); }
+.nf-btn-info:hover { background: var(--nf-pill-hover); }
+.nf-btn:focus-visible { outline: 0; box-shadow: var(--nf-focus-ring); }
+.nf-hero-badges { position: absolute; right: 2.5%; bottom: 3.5%; z-index: 1; display: flex; gap: .6rem; }
+.nf-badge {
+  background: rgba(30,30,30,.8); backdrop-filter: blur(6px);
+  padding: .5rem .9rem; border-radius: 8px; font-weight: 600; font-size: .95rem;
+}
+.nf-dots { position: absolute; right: 3%; top: 6%; display: flex; gap: .4rem; z-index: 2; }
+.nf-dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.35); }
+.nf-dots i.nf-active { background: #fff; }
+
+.nf-btn { white-space: nowrap; }
+@media (max-width: 700px) {
+  .nf-btn { padding: .6rem 1.2rem; font-size: 1rem; }
+  .nf-hero-content { width: 80%; }
+}

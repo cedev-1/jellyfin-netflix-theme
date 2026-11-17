@@ -1,0 +1,45 @@
+/* Search: pill-shaped field, results in a 5-column grid of 16:9 thumbnails (like Netflix) */
+#searchPage .searchFields { display: block !important; padding: 5rem var(--nf-gutter) .5rem; max-width: none; margin: 0; }
+#searchPage .searchFieldsInner {
+  display: flex; max-width: none; justify-content: flex-start;
+  background: #141414; border: 1px solid rgba(255, 255, 255, .7); border-radius: 999px;
+  height: 3.4rem; padding: 0 1.4rem; width: min(44vw, 700px); margin: 0 !important; align-items: center; box-sizing: border-box;
+}
+#searchPage .searchFieldsInner:focus-within { border-color: #fff; }
+#searchPage .searchfields-icon { color: #fff; font-size: 1.8rem; line-height: 1; margin: 0 .6rem 0 0 !important; position: static !important; top: auto !important; flex: none; align-self: center !important; }
+#searchPage .inputContainer { margin: 0 !important; display: flex; align-items: center; height: 100%; padding: 0 !important; }
+#searchPage .inputContainer .inputLabel { display: none; }
+#searchPage .searchfields-txtSearch,
+#searchPage .searchFields input.emby-input {
+  background: transparent !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+  height: 3.2rem; padding: 0 !important; margin: 0 !important; width: 100%; font-size: 1.1rem; line-height: normal; color: #fff; outline: 0;
+}
+#searchPage .searchfields-txtSearch:focus { border: 0 !important; box-shadow: none !important; }
+
+#searchPage .searchResults { padding: 1rem 0 4rem; }
+#searchPage .verticalSection { margin-bottom: 1.5rem; }
+#searchPage .sectionTitle {
+  font-size: 1.1rem; font-weight: 500; color: var(--nf-muted);
+  padding: 0 var(--nf-gutter) !important; margin: 0 0 .6rem;
+}
+#searchPage .emby-scrollbuttons { display: none; }
+#searchPage .emby-scroller { padding: 0 !important; overflow: visible !important; }
+#searchPage .itemsContainer {
+  display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .8rem;
+  white-space: normal !important; transform: none !important; width: auto !important;
+  padding: 0 var(--nf-gutter) !important;
+}
+#searchPage .card { width: auto !important; padding: 0 !important; margin: 0 !important; }
+/* 16:9 only for videos (see home.css); other types keep their shape, at equal height */
+#searchPage .card.overflowPortraitCard { width: 37.5% !important; }
+#searchPage .card.overflowSquareCard { width: 56.25% !important; }
+#searchPage .card:is([data-type=Movie], [data-type=Series], [data-type=Episode], [data-type=Video]):not([data-nf-landscape=fail]) { width: auto !important; }
+#searchPage .cardPadder-overflowBackdrop,
+#searchPage .card:is([data-type=Movie], [data-type=Series], [data-type=Episode], [data-type=Video]):not([data-nf-landscape=fail]) :is(.cardPadder-overflowPortrait, .cardPadder-overflowSquare) { padding-bottom: 56.25% !important; }
+#searchPage .cardBox { margin: 0; }
+#searchPage .cardScalable { border-radius: var(--nf-radius-card); overflow: hidden; background: #222; }
+#searchPage .cardImageContainer { background-size: cover !important; background-position: center top !important; border-radius: var(--nf-radius-card); }
+#searchPage .card:is([data-type=Movie], [data-type=Series], [data-type=Episode], [data-type=Video]) .cardBox > .cardText { display: none; }
+#searchPage .card:not(:is([data-type=Movie], [data-type=Series], [data-type=Episode], [data-type=Video])) .cardText { color: var(--nf-muted); font-size: .85rem; }
+@media (max-width: 1100px) { #searchPage .itemsContainer { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 700px)  { #searchPage .itemsContainer { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

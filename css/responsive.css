@@ -1,0 +1,51 @@
+/* Cross-cutting responsive fixes (audit 375 -> 1920): no horizontal page overflow,
+   touch targets >= 44 px, text >= 12 px, hero and forms on phones. Loaded last. */
+
+/* Home rows can overflow until the native scroller is initialised (also the case natively, measured without the theme:
+   scrollWidth 912 at 768 px). We clip at page level (clip: no scroll container, row scrolling
+   and sticky positioning are not affected). */
+.mainAnimatedPages > .page { overflow-x: clip; }
+
+/* Touch: targets >= 44 px */
+@media (pointer: coarse) {
+  .headerUserButton > div { transform: none !important; width: 100%; height: 100%; padding: 0 !important; border-radius: 50%; background-size: cover; }
+  :is(.paper-icon-button-light, .cardOverlayButton, .fab):not(.headerButton) { min-width: 44px; min-height: 44px; }
+  :is(button.raised, .button-flat-mini, .emby-select-withcolor, .emby-input, .emby-textarea) { min-height: 44px; box-sizing: border-box; }
+  .button-flat-mini { display: inline-flex; align-items: center; }
+  .checkboxContainer { min-height: 44px; display: flex; align-items: center; }
+  #searchPage a.emby-button.button-link { display: inline-flex; align-items: center; min-height: 44px; }
+  .itemDetailPage a.overview-expand, .itemDetailPage a.button-link.itemAction { display: inline-flex; align-items: center; min-height: 44px; }
+  #homeTab .emby-scrollbuttons { display: none; }
+  body.dashboardDocument :is(.MuiIconButton-root, .MuiButton-root, .MuiChip-root, .MuiCheckbox-root, .MuiTableSortLabel-root) { min-width: 44px; min-height: 44px; box-sizing: border-box; }
+  body.dashboardDocument :is(.MuiInputBase-input, .MuiNativeSelect-select) { min-height: 44px; box-sizing: border-box; }
+  body.dashboardDocument .MuiTableSortLabel-root { display: inline-flex; align-items: center; justify-content: center; }
+}
+
+/* Phone */
+@media (max-width: 700px) {
+  .alphaPicker, .alphaPicker-fixed { display: none !important; }
+
+  /* Hero: taller than 16:9 (otherwise the content overflows), more compact text, badge hidden (it covers the buttons) */
+  #nf-hero { height: clamp(22rem, 112vw, 72vh); margin-bottom: 1.2rem; }
+  .nf-hero-content { left: 5%; width: 90%; bottom: 6%; }
+  .nf-hero-logo { max-height: 5.5rem; max-width: 80%; margin-bottom: .8rem; }
+  .nf-hero-title { font-size: clamp(1.8rem, 9vw, 2.6rem); margin-bottom: .6rem; }
+  .nf-hero-meta { font-size: .9rem; margin-bottom: .9rem; }
+  .nf-hero-badges { display: none; }
+  .nf-btn { min-height: 44px; }
+
+  /* Search: full-width field, clearance below the 2-row header */
+  #searchPage .searchFields { padding-top: 6.5rem; }
+  #searchPage .searchFieldsInner { width: 100%; }
+
+  /* Login: card with narrower margins, a single wordmark */
+  #loginPage .readOnlyContent, #loginPage .manualLoginForm { padding: 2rem 1.4rem 2.2rem; max-width: none !important; border-radius: 0; }
+  #loginPage .manualLoginForm { margin-top: 18vh !important; }
+  #loginPage::before { font-size: 2.2rem; }
+}
+/* A single wordmark on the login page (the page's own) */
+body:has(#loginPage:not(.hide)) .skinHeader .headerLeft::before { display: none; }
+
+/* Admin drawer: MUI drops to 10-11 px on the Jellyfin theme, we keep a 12 px minimum */
+body.dashboardDocument .MuiListSubheader-root { font-size: max(12px, .8rem); }
+body.dashboardDocument .MuiListItemText-secondary, body.dashboardDocument .MuiTypography-body2 { font-size: max(12px, .85rem); }

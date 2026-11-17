@@ -1,0 +1,117 @@
+/* Netflix red accent + shared hover/focus states (values: --nf-* from tokens.css).
+   The legacy 10.11 client hard-codes the blue #00a4dc in its selectors (no variable), so we override them one by one.
+   The MUI pages (React admin dashboard) read --jf-palette-primary-*: see tokens.css. */
+
+/* ---- accent: badges, progress, sliders, checkboxes, spinners ---- */
+.countIndicator, .fullSyncIndicator, .mediaSourceIndicator, .playedIndicator { background: var(--nf-red); color: #fff; }
+.progressring-spiner, .mdl-spinner__layer-1, .mdl-spinner__layer-2, .mdl-spinner__layer-3, .mdl-spinner__layer-4 { border-color: var(--nf-red); }
+progress::-webkit-progress-value, progress[aria-valuenow]::before,
+.playbackProgress > div, .iconOsdProgressInner, .mdl-slider-background-lower, .sliderMarker.watched,
+.mdl-slider::-webkit-slider-thumb { background-color: var(--nf-red); }
+.mdl-slider::-webkit-slider-thumb { background: var(--nf-red); }
+.mdl-slider { color: var(--nf-red); }
+.emby-checkbox:checked + span + .checkboxOutline { background-color: var(--nf-red); border-color: var(--nf-red); }
+.emby-checkbox:focus:not(:checked) + span + .checkboxOutline { border-color: #fff; }
+.upNextDialog-countdownText, .buttonActive { color: var(--nf-red) !important; }
+.metadataSidebarIcon { color: #fff; }
+.itemSelectionPanel { border-color: var(--nf-red); }
+.selectionCommandsPanel, .emby-button.detailFloatingButton, .listItemIcon:not(.listItemIcon-transparent) { background-color: var(--nf-red); color: #fff; }
+
+/* ---- buttons ---- */
+.button-submit { background: var(--nf-red); color: #fff; transition: background-color var(--nf-ease); }
+.button-submit:hover { background: var(--nf-red-hover); }
+.button-accent-flat { color: #fff !important; }
+.button-flat, .button-link { color: var(--nf-muted); transition: color var(--nf-ease); }
+.button-flat:hover, .button-link:hover { color: #fff; }
+.button-link:hover { text-decoration: underline; }
+a.button-link, .button-link { color: #fff; }
+.raised:not(.button-submit):not(.nf-btn):hover { background-color: var(--nf-pill-hover); }
+.emby-button.show-focus:focus { box-shadow: var(--nf-focus-ring); }
+.emby-button.show-focus:focus:not(.raised):not(.button-submit):not(.detailFloatingButton):not(.emby-tab-button) { background: var(--nf-hover-bg); color: #fff; }
+.button-submit.show-focus:focus { background: var(--nf-red-hover); color: #fff; }
+.raised.show-focus:focus:not(.button-submit) { background: var(--nf-pill-hover); color: #fff; }
+
+/* round icon buttons (player, lists, cards) */
+.paper-icon-button-light { transition: background-color var(--nf-ease), color var(--nf-ease), transform var(--nf-ease); }
+.paper-icon-button-light:hover:not(:disabled) { background-color: var(--nf-hover-bg); color: #fff; }
+.paper-icon-button-light:active:not(:disabled) { background-color: rgba(255, 255, 255, .2); color: #fff; }
+.paper-icon-button-light.show-focus:focus { color: #fff; box-shadow: var(--nf-focus-ring); }
+.listItemImageButton:hover { background: var(--nf-hover-bg); color: #fff; }
+.emby-scrollbuttons-button { transition: background-color var(--nf-ease); }
+.emby-scrollbuttons-button:hover:not(:disabled) { background: rgba(20, 20, 20, .95); color: #fff; }
+
+/* ---- fields ---- */
+.inputLabelFocused, .selectLabelFocused, .textareaLabelFocused { color: #fff; }
+.emby-input:focus, .emby-textarea:focus { border-color: #fff; }
+.emby-select-withcolor:focus { border-color: #fff !important; }
+.emby-select-tv-withcolor:focus { background-color: var(--nf-hover-bg) !important; color: #fff !important; }
+.alphaPickerButton-tv:focus, .guide-channelHeaderCell:focus, .programCell:focus, .guide-date-tab-button.show-focus:focus {
+  background-color: var(--nf-red) !important; color: #fff !important;
+}
+.guide-date-tab-button.emby-tab-button-active, .guide-date-tab-button:focus { color: var(--nf-red); }
+.emby-tab-button.show-focus:focus, .emby-tab-button:hover { color: #fff; }
+
+/* ---- menus / drawer ---- */
+.navMenuOption { transition: background-color var(--nf-ease); }
+.navMenuOption:hover { background: var(--nf-hover-bg); }
+.navMenuOption-selected { background: var(--nf-hover-bg) !important; color: #fff; box-shadow: inset 3px 0 0 var(--nf-red); }
+.actionSheetMenuItem:hover, .actionSheetMenuItem:focus { background: var(--nf-hover-bg); }
+
+/* ---- lists (outside the admin dashboard) ---- */
+.page:not(.type-interior) .listItem { border-radius: 8px; transition: background-color var(--nf-ease); }
+.page:not(.type-interior) .listItem .listItemImage { position: relative; overflow: hidden; }
+.page:not(.type-interior) .listItem .listItemImage::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit;
+  backdrop-filter: blur(0) brightness(1); -webkit-backdrop-filter: blur(0) brightness(1);
+  transition: backdrop-filter var(--nf-hover-ease), -webkit-backdrop-filter var(--nf-hover-ease);
+}
+.page:not(.type-interior) .listItem .listItemImage::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
+  box-shadow: var(--nf-focus-inset); opacity: 0; transition: opacity var(--nf-hover-ease);
+}
+@media (hover: hover) {
+  .page:not(.type-interior) .listItem:hover { background: var(--nf-hover-bg); }
+  .page:not(.type-interior) .listItem:hover .listItemImage::before { backdrop-filter: blur(var(--nf-hover-blur)) brightness(var(--nf-hover-dim)); -webkit-backdrop-filter: blur(var(--nf-hover-blur)) brightness(var(--nf-hover-dim)); }
+}
+.page:not(.type-interior) .listItem:is(:focus-visible, :active) .listItemImage::before { backdrop-filter: blur(var(--nf-hover-blur)) brightness(var(--nf-hover-dim)); -webkit-backdrop-filter: blur(var(--nf-hover-blur)) brightness(var(--nf-hover-dim)); }
+.page:not(.type-interior) .listItem:focus-visible .listItemImage::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .page:not(.type-interior) .listItem .listItemImage::before, .page:not(.type-interior) .listItem .listItemImage::after { transition: none; } }
+
+/* ---- cards: one single behaviour everywhere (outside the admin dashboard) ----
+   Hover / keyboard focus / touch press: NO growth or translation. Two effects, both inside the card:
+   1. no outline on mouse hover; keyboard focus (:focus-visible) only shows a red inner ring (::after of .cardScalable);
+   2. slight blur + darkening of the image (backdrop-filter on ::before of .cardImageContainer, so the text, the
+      badges, the progress bar and the play button stay sharp on top).
+   Real hover only under (hover: hover); :focus-visible and :active (touch) get the same variant. */
+.page:not(.type-interior) .cardBox { transform: none !important; }
+.page:not(.type-interior) .cardScalable { position: relative; overflow: hidden; border-radius: var(--nf-radius-card); }
+.page:not(.type-interior) .cardScalable .cardImageContainer { contain: layout style; border-radius: inherit; }
+.page:not(.type-interior) .cardImageContainer::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit;
+  backdrop-filter: blur(0) brightness(1); -webkit-backdrop-filter: blur(0) brightness(1);
+  transition: backdrop-filter var(--nf-hover-ease), -webkit-backdrop-filter var(--nf-hover-ease);
+}
+.page:not(.type-interior) .cardImageContainer > :is(.cardDefaultText, .cardImageIcon) { position: relative; z-index: 1; }
+.page:not(.type-interior) .cardScalable::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
+  box-shadow: var(--nf-focus-inset); opacity: 0; transition: opacity var(--nf-hover-ease);
+}
+.page:not(.type-interior) .card:focus .cardBox.visualCardBox, .page:not(.type-interior) .card:focus .cardBox:not(.visualCardBox) .cardScalable { border-color: transparent !important; }
+/* the darkening comes from the image: Jellyfin's native overlay (0.5) is removed, the buttons keep their fade-in */
+.page:not(.type-interior) .cardOverlayContainer { border-radius: inherit; background: transparent !important; transition: opacity var(--nf-hover-ease); }
+.page:not(.type-interior) .cardOverlayButton-hover { transition: opacity var(--nf-hover-ease), background-color var(--nf-hover-ease); }
+.page:not(.type-interior) .cardOverlayButton { color: #fff; }
+/* central play button (provided by Jellyfin): dark disc, no outline, never enlarged */
+.page:not(.type-interior) .cardOverlayContainer > .cardOverlayFab-primary {
+  background-color: rgba(0, 0, 0, .55) !important; color: #fff; border: 0 !important; box-shadow: none !important; outline: 0;
+  transform: none !important; transition: background-color var(--nf-hover-ease), color var(--nf-hover-ease);
+}
+@media (hover: hover) {
+  .page:not(.type-interior) .card:hover .cardImageContainer::before { backdrop-filter: blur(var(--nf-hover-blur)) brightness(var(--nf-hover-dim)); -webkit-backdrop-filter: blur(var(--nf-hover-blur)) brightness(var(--nf-hover-dim)); }
+}
+.page:not(.type-interior) .card:is(:has(:focus-visible), :active) .cardImageContainer::before { backdrop-filter: blur(var(--nf-hover-blur)) brightness(var(--nf-hover-dim)); -webkit-backdrop-filter: blur(var(--nf-hover-blur)) brightness(var(--nf-hover-dim)); }
+.page:not(.type-interior) .card:has(:focus-visible) .cardScalable::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .page:not(.type-interior) .cardImageContainer::before, .page:not(.type-interior) .cardScalable::after,
+  .page:not(.type-interior) .cardOverlayContainer, .page:not(.type-interior) .cardOverlayButton-hover { transition: none; }
+}

@@ -1,0 +1,53 @@
+/* Rows and thumbnails. Shared gutter: var(--nf-gutter) (3.3vw, measured on a Netflix capture). */
+#homeTab .sectionTitleContainer,
+#homeTab .sectionTitleContainer.padded-left,
+#homeTab .emby-scrollbuttons.padded-right { padding-left: var(--nf-gutter) !important; padding-right: var(--nf-gutter) !important; }
+#homeTab .itemsContainer.scrollSlider,
+#homeTab .padded-left.scrollSlider { padding-left: var(--nf-gutter) !important; padding-right: var(--nf-gutter) !important; }
+#homeTab .emby-scroller { padding-left: 0 !important; padding-right: 0 !important; scroll-padding-left: var(--nf-gutter); }
+
+#homeTab .verticalSection { margin-bottom: 1.2rem; }
+#homeTab .sectionTitle, #homeTab .sectionTitle-cards {
+  font-size: 1.6vw; font-weight: 700; color: var(--nf-text);
+  margin: 0 0 .5rem; line-height: 1.2;
+}
+@media (max-width: 1100px) { #homeTab .sectionTitle { font-size: 1.25rem; } }
+#homeTab .sectionTitleContainer .material-icons { opacity: 0; transition: opacity .2s; font-size: 1.2em; }
+#homeTab .sectionTitleContainer a:hover .material-icons { opacity: 1; }
+
+/* Cards: rounded 16:9, 5 visible + a peek of the 6th like Netflix.
+   Only video content (Movie, Series, Episode, Video) is forced to 16:9: netflix.js sets the backdrop (then Thumb) on them.
+   Albums, books, playlists, collections, seasons keep their native shape, at equal height (portrait x0.375; square x0.5625).
+   If no 16:9 image exists, netflix.js sets data-nf-landscape=fail and the card reverts to its native shape. */
+#homeTab { --nf-card-w: calc((100vw - 2 * var(--nf-gutter) - 4 * .6vw) / 5); }
+#homeTab .card { padding: 0 !important; margin-right: .6vw; }
+#homeTab .overflowBackdropCard { width: var(--nf-card-w) !important; }
+#homeTab .overflowPortraitCard { width: calc(var(--nf-card-w) * .375) !important; }
+#homeTab .overflowSquareCard { width: calc(var(--nf-card-w) * .5625) !important; }
+#homeTab .card:is([data-type=Movie], [data-type=Series], [data-type=Episode], [data-type=Video]):not([data-nf-landscape=fail]) { width: var(--nf-card-w) !important; }
+#homeTab .cardPadder-overflowBackdrop,
+#homeTab .card:is([data-type=Movie], [data-type=Series], [data-type=Episode], [data-type=Video]):not([data-nf-landscape=fail]) :is(.cardPadder-overflowPortrait, .cardPadder-overflowSquare) { padding-bottom: 56.25% !important; }
+#homeTab .cardBox { margin: 0; }
+#homeTab .cardBox-bottompadded { margin-bottom: 0; }
+#homeTab .cardScalable { border-radius: var(--nf-radius-card); overflow: hidden; background: #222; }
+#homeTab .cardImageContainer { background-size: cover !important; background-position: center !important; border-radius: var(--nf-radius-card); }
+/* Netflix does not show text under thumbnails (except My Media tiles) */
+#homeTab .card:is([data-type=Movie], [data-type=Series], [data-type=Episode], [data-type=Video]) .cardBox > .cardText { display: none; }
+#homeTab .card[data-type=CollectionFolder] .cardText { color: var(--nf-text); font-weight: 600; font-size: .95rem; }
+
+/* card hover: css/accent.css (shared tokens) */
+
+.cardText { color: var(--nf-muted); }
+.cardText-first { color: var(--nf-text); }
+
+.itemProgressBar, .cardProgressBar { background: rgba(255, 255, 255, .3); height: 4px; }
+.itemProgressBar > div, .cardProgressBar > div, .itemProgressBarForeground { background: var(--nf-red) !important; }
+
+.emby-scrollbuttons-button { background: rgba(20, 20, 20, .7); color: #fff; border-radius: 50%; }
+
+/* narrow window: fewer visible thumbnails */
+@media (max-width: 1100px) { #homeTab { --nf-card-w: calc((100vw - 2 * var(--nf-gutter) - 2 * .6vw) / 3); } }
+@media (max-width: 700px) {
+  #homeTab { --nf-card-w: calc((100vw - 2 * var(--nf-gutter) - .6vw) / 2.2); }
+  #homeTab .sectionTitle { font-size: 1.15rem; }
+}

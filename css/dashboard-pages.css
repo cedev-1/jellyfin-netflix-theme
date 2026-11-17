@@ -1,0 +1,56 @@
+/* Dashboard 10.11: specific pages (home, libraries, plugins...) + responsive behaviour. See dashboard.css. */
+
+/* cards with a "generic" background (devices, plugins, libraries without an image): dark grey and red instead of the 5 blues */
+body.dashboardDocument .defaultCardBackground1 { background: linear-gradient(135deg, #2e2e2e, #1b1b1b); }
+body.dashboardDocument .defaultCardBackground2 { background: linear-gradient(135deg, #5a0d12, #240608); }
+body.dashboardDocument .defaultCardBackground3 { background: linear-gradient(135deg, #3a3a3a, #202020); }
+body.dashboardDocument .defaultCardBackground4 { background: linear-gradient(135deg, #7a0b12, #330709); }
+body.dashboardDocument .defaultCardBackground5 { background: linear-gradient(135deg, #252525, #141414); }
+
+/* ---- dashboard home: section titles (links) aligned with the cards ---- */
+body.dashboardDocument #dashboardPage .MuiButtonBase-root.MuiLink-root, body.dashboardDocument #dashboardPage a.MuiTypography-root { text-decoration: none; }
+
+/* ---- responsive ---- */
+body.dashboardDocument .content-primary { max-width: 100%; text-align: left; }
+body.dashboardDocument .MuiButton-root { white-space: nowrap; }
+body.dashboardDocument #dashboardPage .MuiStack-root:has(> .MuiButton-root) { flex-wrap: wrap; }
+body.dashboardDocument :is(.checkboxContainer, .sectioncheckbox, .fldRemoteAccess) { justify-content: flex-start; text-align: left; }
+body.dashboardDocument .MuiTableContainer-root, body.dashboardDocument .MuiTable-root { max-width: 100%; }
+body.dashboardDocument .MuiTableContainer-root { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+body.dashboardDocument .content-primary img, body.dashboardDocument .content-primary video { max-width: 100%; }
+body.dashboardDocument pre, body.dashboardDocument textarea { max-width: 100%; box-sizing: border-box; }
+
+/* touch screens: targets >= 44px */
+@media (pointer: coarse) {
+  body.dashboardDocument :is(.MuiIconButton-root, .MuiButton-root, .MuiTab-root, .MuiMenuItem-root, .MuiTablePagination-root .MuiButtonBase-root) { min-width: var(--dash-tap); min-height: var(--dash-tap); }
+  body.dashboardDocument .MuiCheckbox-root, body.dashboardDocument .MuiRadio-root, body.dashboardDocument .MuiSwitch-root .MuiSwitch-switchBase { min-width: var(--dash-tap); min-height: var(--dash-tap); }
+  body.dashboardDocument :is(.checkboxContainer, .emby-checkbox-label) { min-height: var(--dash-tap); display: flex; align-items: center; }
+  body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .paper-icon-button-light, body.dashboardDocument .listItem .listItemButton { min-width: var(--dash-tap); min-height: var(--dash-tap); }
+  body.dashboardDocument :is(.emby-input, .emby-select-withcolor) { min-height: var(--dash-tap); }
+}
+
+/* below 900px: the drawer becomes temporary (MUI SwipeableDrawer), full height, bounded width */
+@media (max-width: 899.95px) {
+  body.dashboardDocument .MuiDrawer-paper { width: min(280px, 84vw); }
+  body.dashboardDocument .MuiAppBar-root { width: 100% !important; margin-left: 0 !important; }
+}
+@media (max-width: 599.95px) {
+  body.dashboardDocument { --dash-gutter: 16px; }
+  body.dashboardDocument .content-primary { padding-top: 4.25rem; }
+  body.dashboardDocument .withTabs .content-primary { padding-top: 7.25rem; }
+  body.dashboardDocument .content-primary h1.MuiTypography-h1 { font-size: 1.5rem; }
+  body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .emby-button.raised { padding-left: 1.2rem; padding-right: 1.2rem; }
+  body.dashboardDocument fieldset.verticalSection, body.dashboardDocument .content-primary fieldset { padding: .8rem 1rem 1rem; }
+  body.dashboardDocument .MuiDialog-paper { margin: 16px; width: calc(100% - 32px); max-width: none; }
+  body.dashboardDocument .MuiDialog-paperFullScreen { margin: 0; width: 100%; border-radius: 0; }
+  body.dashboardDocument .MuiTablePagination-toolbar { flex-wrap: wrap; justify-content: flex-end; }
+  body.dashboardDocument .MuiTablePagination-spacer { display: none; }
+}
+
+/* user edit page: link and "remote access" checkbox also left-aligned on mobile */
+body.dashboardDocument .lnkEditUserPreferences { justify-content: flex-start; text-align: left; padding-left: 0; padding-right: 0; }
+body.dashboardDocument .checkboxContainer-withDescription .emby-checkbox-label, body.dashboardDocument .sectioncheckbox > .emby-checkbox-label { display: flex; width: 100%; justify-content: flex-start; }
+
+/* long URLs (plugin repositories, paths): wrap inside list rows instead of overflowing */
+body.dashboardDocument :is(.MuiListItemText-root, .listItemBody, .listItemBodyText, .MuiFormHelperText-root, .fieldDescription) { min-width: 0; overflow-wrap: anywhere; }
+body.dashboardDocument .MuiListItem-root, body.dashboardDocument .MuiListItemButton-root { min-width: 0; }

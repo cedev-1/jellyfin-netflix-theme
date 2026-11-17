@@ -1,0 +1,14 @@
+{
+  "name": "jellyfin-netflix-theme",
+  "version": "1.0.0",
+  "description": "An unofficial, Netflix-inspired theme for the Jellyfin 10.11 web client (CSS + light JavaScript).",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cedev-1/jellyfin-netflix-theme.git"
+  }
+}

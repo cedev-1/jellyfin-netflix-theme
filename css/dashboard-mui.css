@@ -1,0 +1,164 @@
+/* Dashboard 10.11: MUI components (React pages: home, users, devices, activity, API keys, tasks...).
+   Same look as dashboard.css: #1f1f1f surfaces, Netflix red, pill buttons, #333 fields. Prefix body.dashboardDocument: portals (menus, dialogs) included. */
+
+/* ---- surfaces: rounded cards and papers, no elevation ---- */
+body.dashboardDocument .MuiPaper-root { background-image: none; }
+body.dashboardDocument .MuiCard-root, body.dashboardDocument .content-primary .MuiPaper-root:not(.MuiAlert-root):not(.MuiMenu-paper):not(.MuiPopover-paper) {
+  background-color: var(--dash-surface); border-radius: var(--nf-radius-card); box-shadow: none; border: 1px solid var(--dash-line);
+}
+body.dashboardDocument .MuiCard-root { overflow: hidden; transition: background-color var(--nf-ease), border-color var(--nf-ease), transform var(--nf-ease), box-shadow var(--nf-ease); }
+@media (hover: hover) {
+  body.dashboardDocument a.MuiCard-root:hover, body.dashboardDocument .MuiCardActionArea-root:hover { border-color: rgba(255, 255, 255, .28); }
+  body.dashboardDocument .MuiCardActionArea-root:hover .MuiCardActionArea-focusHighlight { opacity: .08; }
+}
+body.dashboardDocument .MuiAlert-root { border-radius: var(--dash-radius); background: var(--dash-surface-2); color: var(--nf-text); }
+body.dashboardDocument .MuiAlert-standardWarning, body.dashboardDocument .MuiAlert-standardError { background: rgba(229, 9, 20, .14); color: #ffd3d5; }
+body.dashboardDocument .MuiAlert-icon { color: var(--nf-red); }
+
+/* ---- buttons: pills, no uppercase text ---- */
+body.dashboardDocument .MuiButton-root {
+  border-radius: 999px; text-transform: none; font-weight: 600; font-size: .9rem; letter-spacing: 0; min-height: 2.5rem; padding: .4rem 1.4rem;
+  box-shadow: none; transition: background-color var(--nf-ease), color var(--nf-ease), border-color var(--nf-ease), transform var(--nf-ease);
+}
+body.dashboardDocument .MuiButton-sizeLarge { min-height: 3rem; font-size: 1rem; }
+body.dashboardDocument .MuiButton-contained { box-shadow: none; }
+body.dashboardDocument .MuiButton-containedPrimary { background: var(--nf-red); color: #fff; }
+body.dashboardDocument .MuiButton-containedPrimary:hover { background: var(--nf-red-hover); box-shadow: none; }
+body.dashboardDocument .MuiButton-containedInherit, body.dashboardDocument .MuiButton-containedSecondary, body.dashboardDocument .MuiButton-containedInfo {
+  background: var(--nf-pill); color: #fff;
+}
+body.dashboardDocument .MuiButton-containedInherit:hover, body.dashboardDocument .MuiButton-containedSecondary:hover, body.dashboardDocument .MuiButton-containedInfo:hover { background: var(--nf-pill-hover); box-shadow: none; }
+/* destructive: grey pill, light red text (Restart, Shutdown, Delete All) */
+body.dashboardDocument .MuiButton-containedError { background: var(--nf-pill); color: #ff6b72; }
+body.dashboardDocument .MuiButton-containedError:hover { background: var(--nf-pill-hover); color: #ff858b; box-shadow: none; }
+body.dashboardDocument .MuiButton-outlined, body.dashboardDocument .MuiButton-outlinedPrimary, body.dashboardDocument .MuiButton-outlinedInherit {
+  border: 1px solid rgba(255, 255, 255, .5); color: #fff; background: transparent;
+}
+body.dashboardDocument .MuiButton-outlined:hover { border-color: #fff; background: var(--nf-hover-bg); }
+body.dashboardDocument .MuiButton-outlinedError { border-color: rgba(255, 107, 114, .6); color: #ff6b72; }
+body.dashboardDocument .MuiButton-text, body.dashboardDocument .MuiButton-textPrimary { color: #fff; }
+body.dashboardDocument .MuiButton-text:hover { background: var(--nf-hover-bg); }
+body.dashboardDocument .MuiButton-root.Mui-disabled { background: rgba(255, 255, 255, .08); color: rgba(255, 255, 255, .42); border-color: transparent; }
+body.dashboardDocument .MuiButton-root.Mui-focusVisible, body.dashboardDocument .MuiIconButton-root.Mui-focusVisible,
+body.dashboardDocument .MuiTab-root.Mui-focusVisible, body.dashboardDocument .MuiMenuItem-root.Mui-focusVisible,
+body.dashboardDocument .MuiListItemButton-root.Mui-focusVisible, body.dashboardDocument .MuiChip-root.Mui-focusVisible { box-shadow: var(--nf-focus-ring); outline: 0; }
+body.dashboardDocument .MuiTouchRipple-child { background-color: rgba(255, 255, 255, .5); }
+body.dashboardDocument .MuiButton-startIcon svg, body.dashboardDocument .MuiButton-endIcon svg { font-size: 1.2rem; }
+
+body.dashboardDocument .MuiIconButton-root { color: var(--nf-muted); transition: background-color var(--nf-ease), color var(--nf-ease); }
+@media (hover: hover) { body.dashboardDocument .MuiIconButton-root:hover { background: var(--nf-hover-bg); color: #fff; } }
+body.dashboardDocument .MuiIconButton-colorPrimary { color: #fff; }
+body.dashboardDocument .MuiIconButton-colorError { color: #ff6b72; }
+body.dashboardDocument .MuiFab-root { background: var(--nf-red); color: #fff; box-shadow: var(--nf-card-shadow); }
+body.dashboardDocument .MuiFab-root:hover { background: var(--nf-red-hover); }
+
+/* ---- fields: TextField filled / outlined / Select = same style as login.css ---- */
+body.dashboardDocument .MuiFilledInput-root {
+  background: var(--dash-field); border-radius: 6px; border: 1px solid transparent; color: #fff;
+  transition: background-color var(--nf-ease), border-color var(--nf-ease);
+}
+body.dashboardDocument .MuiFilledInput-root:hover { background: var(--dash-field-hover); }
+body.dashboardDocument .MuiFilledInput-root.Mui-focused { background: var(--dash-field-focus); border-color: #fff; }
+body.dashboardDocument .MuiFilledInput-root.Mui-disabled { background: rgba(255, 255, 255, .06); opacity: .6; }
+body.dashboardDocument .MuiFilledInput-root.Mui-error { border-color: #ff6b72; }
+body.dashboardDocument .MuiFilledInput-root::before, body.dashboardDocument .MuiFilledInput-root::after { display: none; }
+body.dashboardDocument .MuiInput-root { background: var(--dash-field); border-radius: 6px; border: 1px solid transparent; color: #fff; padding: 0 .9rem; transition: background-color var(--nf-ease), border-color var(--nf-ease); }
+body.dashboardDocument .MuiInput-root::before, body.dashboardDocument .MuiInput-root::after { display: none; }
+body.dashboardDocument .MuiInput-root.Mui-focused { background: var(--dash-field-focus); border-color: #fff; }
+body.dashboardDocument .MuiInput-root .MuiInputBase-input { min-height: 2.6rem; }
+body.dashboardDocument .MuiInputLabel-standard:not(.MuiInputLabel-shrink) { padding-left: .9rem; }
+body.dashboardDocument .MuiOutlinedInput-root { background: var(--dash-field); border-radius: 6px; color: #fff; }
+body.dashboardDocument .MuiOutlinedInput-notchedOutline { border-color: transparent; }
+body.dashboardDocument .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, .35); }
+body.dashboardDocument .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-color: #fff; border-width: 1px; }
+body.dashboardDocument .MuiInputBase-root { color: #fff; }
+body.dashboardDocument .MuiInputBase-input::placeholder { color: rgba(255, 255, 255, .45); opacity: 1; }
+body.dashboardDocument .MuiInputLabel-root { color: var(--nf-muted); }
+body.dashboardDocument .MuiInputLabel-root.Mui-focused { color: #fff; }
+body.dashboardDocument .MuiInputLabel-root.Mui-error { color: #ff6b72; }
+body.dashboardDocument .MuiFormHelperText-root { color: var(--nf-muted); margin-left: .2rem; }
+body.dashboardDocument .MuiFormHelperText-root.Mui-error { color: #ff6b72; }
+body.dashboardDocument .MuiFormLabel-root.Mui-focused { color: #fff; }
+body.dashboardDocument .MuiSelect-icon, body.dashboardDocument .MuiSvgIcon-root.MuiSelect-icon { color: var(--nf-muted); }
+body.dashboardDocument .MuiInputAdornment-root { color: var(--nf-muted); }
+body.dashboardDocument .MuiFormControlLabel-label { color: var(--nf-text); }
+body.dashboardDocument .MuiFormControlLabel-root.Mui-disabled .MuiFormControlLabel-label { color: var(--nf-muted); }
+
+/* ---- checkboxes, radios, switches ---- */
+body.dashboardDocument .MuiCheckbox-root, body.dashboardDocument .MuiRadio-root { color: rgba(255, 255, 255, .6); }
+body.dashboardDocument .MuiCheckbox-root.Mui-checked, body.dashboardDocument .MuiRadio-root.Mui-checked,
+body.dashboardDocument .MuiCheckbox-root.MuiCheckbox-indeterminate { color: var(--nf-red); }
+body.dashboardDocument .MuiSwitch-switchBase.Mui-checked { color: #fff; }
+body.dashboardDocument .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track { background-color: var(--nf-red); opacity: 1; }
+body.dashboardDocument .MuiSwitch-track { background-color: #5a5a5a; opacity: 1; border-radius: 999px; }
+body.dashboardDocument .MuiSwitch-thumb { color: #fff; box-shadow: none; }
+body.dashboardDocument .MuiSlider-root { color: var(--nf-red); }
+body.dashboardDocument .MuiSlider-rail { background: rgba(255, 255, 255, .3); opacity: 1; }
+body.dashboardDocument .MuiSlider-thumb:hover, body.dashboardDocument .MuiSlider-thumb.Mui-focusVisible { box-shadow: 0 0 0 8px rgba(229, 9, 20, .2); }
+
+/* ---- MUI tabs (tabbed pages: pill bar) ---- */
+body.dashboardDocument .MuiTabs-root { min-height: var(--dash-tap); }
+body.dashboardDocument .MuiTabs-indicator { background: var(--nf-red); height: 3px; border-radius: 3px 3px 0 0; }
+body.dashboardDocument .MuiTab-root { text-transform: none; font-weight: 600; color: var(--nf-muted); min-height: var(--dash-tap); transition: color var(--nf-ease), background-color var(--nf-ease); }
+body.dashboardDocument .MuiTab-root.Mui-selected { color: #fff; }
+@media (hover: hover) { body.dashboardDocument .MuiTab-root:hover { color: #fff; background: var(--nf-hover-bg); } }
+body.dashboardDocument .MuiTabs-scrollButtons { color: #fff; }
+body.dashboardDocument .MuiTabs-scrollButtons.Mui-disabled { opacity: .3; }
+
+/* ---- chips (plugin categories, etc.) ---- */
+body.dashboardDocument .MuiChip-root { background: var(--nf-pill); color: #fff; border-radius: 999px; font-weight: 500; transition: background-color var(--nf-ease), color var(--nf-ease); }
+body.dashboardDocument .MuiChip-colorPrimary, body.dashboardDocument .MuiChip-filledPrimary { background: var(--nf-text); color: #141414; }
+body.dashboardDocument .MuiChip-outlined { background: transparent; border: 1px solid rgba(255, 255, 255, .4); }
+@media (hover: hover) {
+  body.dashboardDocument .MuiChip-clickable:hover { background: var(--nf-pill-hover); }
+  body.dashboardDocument .MuiChip-colorPrimary.MuiChip-clickable:hover { background: var(--nf-light-hover); }
+}
+
+/* ---- tables (Material React Table: devices, activity, API keys, users...) ---- */
+body.dashboardDocument .MuiTableContainer-root { border-radius: var(--nf-radius-card); }
+body.dashboardDocument .MuiTable-root { background: transparent; }
+body.dashboardDocument .MuiTableHead-root, body.dashboardDocument .MuiTableHead-root .MuiTableRow-root { background: var(--dash-surface-2); }
+body.dashboardDocument .MuiTableCell-head { color: var(--nf-muted); font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid var(--dash-line); }
+body.dashboardDocument .MuiTableCell-body { color: var(--nf-text); border-bottom: 1px solid var(--dash-line); }
+body.dashboardDocument .MuiTableBody-root .MuiTableRow-root { background: transparent; transition: background-color var(--nf-ease); }
+@media (hover: hover) { body.dashboardDocument .MuiTableBody-root .MuiTableRow-root:hover { background: var(--nf-hover-bg); } body.dashboardDocument .MuiTableBody-root .MuiTableRow-root:hover > td { background-color: transparent; } }
+body.dashboardDocument .MuiTableBody-root .MuiTableRow-root.Mui-selected { background: rgba(229, 9, 20, .12); }
+body.dashboardDocument .MuiTableSortLabel-root.Mui-active, body.dashboardDocument .MuiTableSortLabel-root:hover { color: #fff; }
+body.dashboardDocument .MuiTableSortLabel-icon { color: var(--nf-muted) !important; }
+body.dashboardDocument .MuiTablePagination-root { color: var(--nf-muted); border-top: 1px solid var(--dash-line); }
+body.dashboardDocument .MuiTablePagination-selectIcon { color: var(--nf-muted); }
+body.dashboardDocument .MuiTablePagination-select { color: #fff; }
+body.dashboardDocument .MuiSkeleton-root { background-color: rgba(255, 255, 255, .08); }
+body.dashboardDocument .MuiLinearProgress-root { background-color: rgba(255, 255, 255, .15); border-radius: 999px; }
+body.dashboardDocument .MuiLinearProgress-bar { background-color: var(--nf-red); }
+body.dashboardDocument .MuiCircularProgress-root { color: var(--nf-red); }
+body.dashboardDocument .MuiDivider-root { border-color: var(--dash-line); }
+
+/* ---- MUI lists (scheduled tasks, activity) ---- */
+body.dashboardDocument .content-primary .MuiListItemButton-root, body.dashboardDocument .content-primary .MuiListItem-root { color: var(--nf-text); transition: background-color var(--nf-ease); }
+@media (hover: hover) { body.dashboardDocument .content-primary .MuiListItemButton-root:hover { background: var(--nf-hover-bg); } }
+body.dashboardDocument .content-primary .MuiListItemText-secondary { color: var(--nf-muted); }
+body.dashboardDocument .content-primary .MuiAvatar-root, body.dashboardDocument .MuiTableCell-root .MuiAvatar-root { background-color: #3a3a3a; color: #fff; }
+body.dashboardDocument .content-primary .MuiListItemIcon-root { color: var(--nf-muted); }
+
+/* ---- menus, popovers, dialogs, tooltips, notifications (mounted in <body>) ---- */
+body.dashboardDocument .MuiMenu-paper, body.dashboardDocument .MuiPopover-paper, body.dashboardDocument .MuiAutocomplete-paper {
+  background: #232323 !important; border: 1px solid var(--dash-line); border-radius: 10px; box-shadow: 0 12px 32px rgba(0, 0, 0, .7) !important; color: #fff;
+}
+body.dashboardDocument .MuiMenuItem-root { min-height: 2.75rem; font-size: .92rem; border-radius: 6px; margin: 0 .3rem; transition: background-color var(--nf-ease); }
+@media (hover: hover) { body.dashboardDocument .MuiMenuItem-root:hover { background: var(--nf-hover-bg); } }
+body.dashboardDocument .MuiMenuItem-root.Mui-selected { background: rgba(229, 9, 20, .18); }
+body.dashboardDocument .MuiMenuItem-root.Mui-selected:hover { background: rgba(229, 9, 20, .26); }
+body.dashboardDocument .MuiMenuItem-root .MuiListItemIcon-root { color: var(--nf-muted); min-width: 36px; }
+body.dashboardDocument .MuiAutocomplete-option.Mui-focused { background: var(--nf-hover-bg) !important; }
+body.dashboardDocument .MuiDialog-paper { background: #181818 !important; border: 1px solid var(--dash-line); border-radius: 14px; box-shadow: 0 24px 64px rgba(0, 0, 0, .8) !important; color: #fff; }
+body.dashboardDocument .MuiDialogTitle-root { font-weight: 700; font-size: 1.3rem; }
+body.dashboardDocument .MuiDialogContentText-root { color: var(--nf-muted); }
+body.dashboardDocument .MuiDialogActions-root { padding: .8rem 1.5rem 1.2rem; gap: .4rem; }
+body.dashboardDocument .MuiTooltip-tooltip { background: #2a2a2a; color: #fff; border: 1px solid var(--dash-line); font-size: .8rem; border-radius: 6px; }
+body.dashboardDocument .MuiTooltip-arrow { color: #2a2a2a; }
+body.dashboardDocument .MuiSnackbarContent-root, body.dashboardDocument .MuiSnackbar-root .MuiAlert-root { background: #2a2a2a; color: #fff; border-radius: 10px; box-shadow: 0 12px 32px rgba(0, 0, 0, .7); }
+body.dashboardDocument .MuiAccordion-root { background: var(--dash-surface); border-radius: var(--nf-radius-card) !important; border: 1px solid var(--dash-line); }
+body.dashboardDocument .MuiAccordion-root::before { display: none; }
+body.dashboardDocument .MuiInputLabel-standard { z-index: 1; pointer-events: none; }
+body.dashboardDocument .MuiTablePagination-input.MuiInput-root { background: transparent; border-color: transparent; padding: 0; }

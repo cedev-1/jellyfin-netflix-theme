@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bebas+Neue&display=swap');
+
+:root {
+  --nf-bg: #141414;
+  --nf-bg-deep: #0b0b0b;
+  --nf-red: #e50914;
+  --nf-text: #ffffff;
+  --nf-muted: #b3b3b3;
+  --nf-pill: rgba(109, 109, 110, 0.45);
+  --nf-radius-card: 10px;
+  --nf-radius-hero: 24px;
+  --nf-gutter: 3.3vw;
+  --nf-red-hover: #f6121d;
+  /* Shared interactions: the whole UI relies on these values (see accent.css) */
+  --nf-ease: .25s ease;
+  --nf-card-shadow: 0 10px 28px rgba(0, 0, 0, .65);  /* static shadow (no hover) */
+  /* Hover / focus: NO growth. Slight blur and image darkening only (no white outline); keyboard focus = red ring (see accent.css) */
+  --nf-focus-inset: inset 0 0 0 2px #e50914;     /* keyboard focus on cards/thumbnails: red inner ring (never on mouse hover) */
+  --nf-hover-blur: 2.5px;
+  --nf-hover-dim: .75;
+  --nf-hover-dur: .2s;
+  --nf-hover-ease: .2s ease;
+  --nf-hover-bg: rgba(255, 255, 255, .12);       /* list rows, menus, drawer items */
+  --nf-pill-hover: rgba(109, 109, 110, .75);     /* grey pill buttons */
+  --nf-light-hover: rgba(255, 255, 255, .8);     /* white button (Play) */
+  --nf-focus-ring: 0 0 0 2px #e50914;            /* keyboard focus: red ring */
+  --nf-font: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --nf-font-logo: 'Bebas Neue', Impact, sans-serif;
+}
+
+html { background: var(--nf-bg) !important; }
+/* transparent body: otherwise it hides the global backdrop (z-index -1) on the detail page */
+body { background: transparent !important; }
+html, body {
+  color: var(--nf-text);
+  font-family: var(--nf-font) !important;
+}
+
+/* Jellyfin 10.11 accent: the React/MUI pages (dashboard, profile...) read --jf-palette-primary-*,
+   the legacy client (buttons, checkboxes, sliders) hard-codes the blue #00a4dc: see accent.css.
+   Strengthened selector (html:root[data-theme]) to win over the 6 native themes. */
+html:root, html[data-theme] {
+  --jf-palette-primary-main: #e50914;
+  --jf-palette-primary-light: #f6454d;
+  --jf-palette-primary-dark: #b20710;
+  --jf-palette-primary-contrastText: #fff;
+  --jf-palette-primary-mainChannel: 229 9 20;
+  --jf-palette-primary-lightChannel: 246 69 77;
+  --jf-palette-primary-darkChannel: 178 7 16;
+  --jf-palette-primary-contrastTextChannel: 255 255 255;
+}

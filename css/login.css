@@ -1,0 +1,47 @@
+/* Login: dark background with a red glow, JELLYFIN wordmark (red Bebas Neue), translucent black card */
+#loginPage { background: radial-gradient(ellipse at 50% 0%, #2a0a0c 0%, #0b0b0b 60%, #000 100%) !important; }
+#loginPage .padded-left, #loginPage .padded-right { padding-left: 0; padding-right: 0; }
+#loginPage .padded-bottom-page { padding-bottom: 0; }
+#loginPage .readOnlyContent, #loginPage .manualLoginForm {
+  background: rgba(0, 0, 0, .75); width: 100%; max-width: 450px !important;
+  margin: 0 auto !important; padding: 3rem 4rem 3.5rem; border-radius: 12px; box-sizing: border-box;
+}
+#loginPage .readOnlyContent { margin-top: 12vh !important; padding: 0; background: none; max-width: none !important; }
+#loginPage .manualLoginForm { margin-top: 12vh !important; }
+#loginPage .readOnlyContent .manualLoginForm { margin-top: 0 !important; }
+#loginPage h1, #loginPage h2, #loginPage .manualLoginForm h1 {
+  font-size: 1.6rem; font-weight: 700; text-align: left; margin: 0 0 1.5rem; color: #fff;
+}
+#loginPage .inputContainer { margin-bottom: 1rem; }
+#loginPage .inputLabel, #loginPage .inputLabelFocused { color: var(--nf-muted) !important; }
+#loginPage .emby-input {
+  background: #333 !important; border: 1px solid transparent !important; border-radius: 6px !important;
+  height: 3.4rem; padding: 0 1rem; color: #fff; box-shadow: none !important;
+}
+#loginPage .emby-input:focus { background: #454545 !important; border-color: #fff !important; }
+
+#loginPage .button-submit, #loginPage .raised.button-submit {
+  background: var(--nf-red) !important; color: #fff !important;
+  border-radius: 6px; height: 3.4rem; font-weight: 700; font-size: 1rem; margin-top: .5rem;
+}
+#loginPage .button-submit:hover { background: var(--nf-red-hover) !important; }
+#loginPage .btnQuick, #loginPage .btnForgotPassword, #loginPage .btnManual, #loginPage .btnCancel {
+  background: transparent !important; color: var(--nf-muted) !important; box-shadow: none !important;
+  font-weight: 500; text-transform: none; height: 2.6rem;
+}
+#loginPage .btnQuick:hover, #loginPage .btnForgotPassword:hover { color: #fff !important; text-decoration: underline; }
+#loginPage .checkboxContainer { color: var(--nf-muted); }
+#loginPage .emby-checkbox:checked + span + .checkboxOutline, #loginPage .checkboxOutline { border-radius: 3px; }
+#loginPage .emby-checkbox:checked + span + .checkboxOutline { background: #b3b3b3 !important; border-color: #b3b3b3 !important; }
+
+/* Profiles (public user list) as round cards */
+#loginPage .card.squareCard .cardImageContainer, #loginPage #divUsers .cardImageContainer { border-radius: 50%; }
+
+/* Wordmark in place of the Jellyfin header logo */
+body:has(#loginPage:not(.hide)) .skinHeader .pageTitle,
+body:has(#loginPage:not(.hide)) .skinHeader .pageTitleWithLogo { background-image: none !important; font-size: 0 !important; }
+#loginPage::before {
+  content: 'JELLYFIN';
+  position: fixed; top: 1.2rem; left: var(--nf-gutter); z-index: 1;
+  font: 2.6rem/1 var(--nf-font-logo); letter-spacing: .04em; color: var(--nf-red);
+}

@@ -1,0 +1,118 @@
+/* Header: transparent with a black gradient at the top of the home page, solid after scrolling (.nf-scrolled set by netflix.js).
+   On 10.11, .semiTransparent only exists on detail/login, so we override .skinHeader directly. */
+.skinHeader:not(.osdHeader),
+.skinHeader.skinHeader-withBackground:not(.osdHeader),
+.skinHeader.skinHeader-blurred:not(.osdHeader) {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, .85) 0%, rgba(0, 0, 0, 0) 100%) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  transition: background-color .3s ease, background .3s ease;
+}
+.skinHeader.nf-scrolled:not(.osdHeader),
+.skinHeader.skinHeader-withBackground.nf-scrolled:not(.osdHeader),
+.skinHeader.skinHeader-blurred.nf-scrolled:not(.osdHeader) {
+  background: var(--nf-bg) !important;
+}
+
+/* Everything below is reserved for the "normal" bar: the player header (.osdHeader) stays 100% native. */
+
+/* Flow layout: [back/menu] [JELLYFIN] [nav] [native library tabs] ........ [search] [profile].
+   .headerTop becomes transparent for layout (display: contents): .headerLeft, .headerTabs and
+   .headerRight are then plain flex items of .skinHeader, with no absolute positioning or hard-coded width. */
+.skinHeader:not(.osdHeader) { flex-direction: row; flex-wrap: nowrap; align-items: center; }
+.skinHeader:not(.osdHeader) .headerTop { display: contents; }
+.skinHeader:not(.osdHeader) .headerLeft { display: flex; align-items: center; flex: none; min-width: 0; }
+.skinHeader:not(.osdHeader) .headerRight { order: 10; margin-left: auto; flex: none; }
+.skinHeader:not(.osdHeader) .headerTabs { order: 1; flex: 0 1 auto; min-width: 0; margin: 0 0 0 .6rem; padding: 0; width: auto; height: auto; }
+
+/* Wordmark: red word (Bebas Neue) created by a ::before of .headerLeft, CSS only. Page titles
+   (dashboard, settings...) are untouched; only the default logo and the empty/redundant title
+   (home, libraries, search: the nav already shows where you are) are hidden. */
+.skinHeader:not(.osdHeader) .headerLeft::before {
+  content: 'JELLYFIN'; order: 5; margin: 0 1.4rem 0 .4rem; flex: none;
+  font-family: var(--nf-font-logo); font-size: 2.1rem; letter-spacing: .02em; line-height: 1; color: var(--nf-red);
+}
+.skinHeader:not(.osdHeader) .pageTitle { order: 6; }
+.skinHeader:not(.osdHeader) .pageTitleWithDefaultLogo,
+.skinHeader:not(.osdHeader) .pageTitle:empty { display: none; }
+body:has(.libraryPage:not(.hide), #searchPage:not(.hide)) .skinHeader:not(.osdHeader) .pageTitle { display: none; }
+
+/* Navigation Home | Series | Movies | My List (injected by netflix.js, ensureNavLinks) */
+.skinHeader:not(.osdHeader) .nf-nav { order: 7; display: flex; align-items: center; gap: .15em; }
+.skinHeader.osdHeader .nf-nav, body:has(#loginPage:not(.hide)) .nf-nav { display: none; }
+.nf-nav .nf-nav-tab {
+  appearance: none; border: 0; cursor: pointer; font: inherit;
+  color: var(--nf-muted); background: transparent;
+  font-size: 1rem; font-weight: 500; line-height: 1.2; white-space: nowrap;
+  padding: .45em 1.1em; border-radius: 999px; text-transform: none;
+  transition: color .2s ease, background-color .2s ease;
+}
+@media (hover: hover) { .nf-nav .nf-nav-tab:hover { color: var(--nf-text); } }
+.nf-nav .nf-nav-tab.nf-nav-active { color: var(--nf-text); background: var(--nf-pill); }
+
+/* Native tabs: Home/Favorites (home page) are replaced by the nav (netflix.js clicks the native tab by
+   proxy); the library ones (Suggestions, Genres...) stay in the same row. */
+body:has(#indexPage:not(.hide)) .skinHeader:not(.osdHeader) .headerTabs { display: none !important; }
+.skinHeader:not(.osdHeader) .headerTabs .emby-tabs-slider { justify-content: flex-start; }
+.skinHeader:not(.osdHeader) .headerTabs .emby-tab-button {
+  color: var(--nf-muted); font-size: .9rem; font-weight: 500; white-space: nowrap;
+  padding: .35em 1em; margin: 0 .1em; border-radius: 999px; border: 0; text-transform: none;
+  transition: color .2s ease, background-color .2s ease;
+}
+.skinHeader:not(.osdHeader) .headerTabs .emby-tab-button .emby-button-foreground { text-transform: none; }
+@media (hover: hover) { .skinHeader:not(.osdHeader) .headerTabs .emby-tab-button:hover { color: var(--nf-text); } }
+.skinHeader:not(.osdHeader) .headerTabs .emby-tab-button-active { color: var(--nf-text); background: var(--nf-pill); }
+.skinHeader:not(.osdHeader) .headerTabs .emby-tab-button-active::after { display: none; }
+
+/* Right-hand icons: clean and aligned; SyncPlay/Cast/home are not Netflix-like (hidden outside the player only) */
+.skinHeader:not(.osdHeader) .headerSyncButton, .skinHeader:not(.osdHeader) .headerCastButton,
+.skinHeader:not(.osdHeader) .headerHomeButton, .skinHeader:not(.osdHeader) .headerSelectedPlayer { display: none !important; }
+.skinHeader:not(.osdHeader) .headerRight { display: flex; align-items: center; gap: .3rem; padding-right: .5rem; }
+.skinHeader:not(.osdHeader) .headerRight .headerButton { color: #fff; margin: 0; display: inline-flex; align-items: center; justify-content: center; }
+.skinHeader:not(.osdHeader) .headerRight .headerButton .material-icons { font-size: 1.9rem; }
+.skinHeader:not(.osdHeader) .headerSearchButton { background: transparent !important; }
+.skinHeader:not(.osdHeader) .headerUserButton { border-radius: 50%; background: var(--nf-pill); width: 2.6rem; height: 2.6rem; padding: 0; }
+.skinHeader:not(.osdHeader) .headerUserButton .material-icons { font-size: 1.6rem; }
+
+/* Touch: targets >= 44 px */
+@media (pointer: coarse) {
+  .nf-nav .nf-nav-tab { min-height: 44px; }
+  .skinHeader:not(.osdHeader) .headerRight .headerButton,
+  .skinHeader:not(.osdHeader) .headerLeft .headerButton,
+  .skinHeader:not(.osdHeader) .headerUserButton { min-width: 44px; min-height: 44px; width: 44px; height: 44px; }
+  .skinHeader:not(.osdHeader) .headerTabs .emby-tab-button { min-height: 44px; }
+}
+
+/* Narrow windows: the row tightens (the nav and native tabs scroll instead of overflowing) */
+@media (max-width: 1100px) {
+  .skinHeader:not(.osdHeader) .headerLeft::before { font-size: 1.8rem; margin-right: .8rem; }
+  .nf-nav .nf-nav-tab { font-size: .9rem; padding: .4em .8em; }
+  .skinHeader:not(.osdHeader) .headerTabs .emby-tab-button { font-size: .85rem; padding: .3em .7em; }
+}
+
+/* Tablet: the native library tabs move to a 2nd, scrollable row */
+@media (max-width: 900px) {
+  .skinHeader:not(.osdHeader) { flex-wrap: wrap; }
+  .skinHeader:not(.osdHeader) .headerTabs {
+    order: 20; flex: 1 0 100%; box-sizing: border-box; margin: 0; padding: 0 .6rem .2rem; overflow-x: auto; scrollbar-width: none;
+  }
+}
+
+/* Phone: 1st row = menu, wordmark, icons; 2nd row = pill nav that scrolls horizontally.
+   .headerLeft becomes transparent for layout so the nav can wrap onto its own line. */
+@media (max-width: 640px) {
+  .skinHeader:not(.osdHeader) { flex-wrap: wrap; align-items: center; padding-bottom: .2rem; }
+  .skinHeader:not(.osdHeader) .headerLeft { display: contents; }
+  .skinHeader:not(.osdHeader) .headerLeft::before { font-size: 1.6rem; margin: 0 .3rem; }
+  .skinHeader:not(.osdHeader) .headerRight { order: 10; padding-right: .3rem; gap: 0; }
+  .skinHeader:not(.osdHeader) .nf-nav {
+    order: 20; flex: 1 0 100%; box-sizing: border-box; min-width: 0;
+    overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+    padding: 0 .6rem .2rem; gap: .2rem;
+  }
+  .skinHeader:not(.osdHeader) .nf-nav::-webkit-scrollbar { display: none; }
+  .nf-nav .nf-nav-tab { flex: none; font-size: .9rem; padding: .4em 1em; }
+  .skinHeader:not(.osdHeader) .headerTabs { display: none !important; }
+}

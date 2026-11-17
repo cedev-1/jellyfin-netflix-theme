@@ -1,0 +1,223 @@
+/* Admin dashboard (10.11): shell (app bar, drawer, page), typography and legacy elements (.content-primary, emby-*).
+   Scope: everything is prefixed with body.dashboardDocument (class set by src/apps/dashboard/AppLayout.tsx while on /dashboard).
+   MUI menus/dialogs and legacy dialogs are mounted in <body>, so the same prefix covers them.
+   MUI components: dashboard-mui.css. Specific pages + responsive: dashboard-pages.css. Tokens: tokens.css / accent.css. */
+
+body.dashboardDocument {
+  /* dashboard-specific surfaces (Netflix has no admin UI: same greys as the account pages) */
+  --dash-surface: #1f1f1f;
+  --dash-surface-2: #2a2a2a;
+  --dash-field: #333;
+  --dash-field-hover: #3d3d3d;
+  --dash-field-focus: #454545;
+  --dash-line: rgba(255, 255, 255, .1);
+  --dash-radius: 8px;
+  --dash-gutter: clamp(16px, 3vw, 40px);
+  --dash-tap: 44px;
+  /* MUI 10.11 palette (read by the app bar, drawer, cards, menus...): replaces the blue / purple / grey #101010 */
+  --jf-palette-background-default: var(--nf-bg);
+  --jf-palette-background-paper: var(--dash-surface);
+  --jf-palette-background-defaultChannel: 20 20 20;
+  --jf-palette-background-paperChannel: 31 31 31;
+  --jf-palette-secondary-main: var(--nf-red);
+  --jf-palette-secondary-light: #f6454d;
+  --jf-palette-secondary-dark: #b20710;
+  --jf-palette-secondary-mainChannel: 229 9 20;
+  --jf-palette-error-main: #ff5a62;
+  --jf-palette-error-mainChannel: 255 90 98;
+  --jf-palette-info-main: #b3b3b3;
+  --jf-palette-info-mainChannel: 179 179 179;
+  --jf-palette-text-secondary: var(--nf-muted);
+  --jf-palette-action-hover: var(--nf-hover-bg);
+  --jf-palette-action-selected: var(--nf-hover-bg);
+  --jf-palette-divider: var(--dash-line);
+  --jf-palette-AppBar-defaultBg: var(--nf-bg);
+  --jf-shape-borderRadius: 8px;
+  font-family: var(--nf-font);
+}
+
+/* Inter everywhere (MUI and legacy elements hard-code Noto Sans) */
+body.dashboardDocument :is(.MuiTypography-root, .MuiButtonBase-root, .MuiInputBase-root, .MuiFormLabel-root, .MuiFormHelperText-root,
+  .MuiTab-root, .MuiMenuItem-root, .MuiChip-root, .MuiTableCell-root, .MuiTablePagination-root, .MuiTooltip-tooltip, .MuiAlert-root,
+  .MuiListItemText-root, .MuiListSubheader-root, .MuiDialog-paper, .MuiSnackbarContent-root, .MuiAutocomplete-root,
+  .emby-input, .emby-select, .emby-textarea, .emby-button, .emby-tab-button, .dialog, .actionSheet, .listItemBodyText, .fieldDescription, .content-primary) {
+  font-family: var(--nf-font);
+}
+
+/* ---- page: background, gutter, titles ---- */
+body.dashboardDocument .mainAnimatedPage { background: transparent; }
+body.dashboardDocument .content-primary { padding-left: var(--dash-gutter); padding-right: var(--dash-gutter); box-sizing: border-box; color: var(--nf-text); padding-top: 4.75rem; }
+body.dashboardDocument .withTabs .content-primary { padding-top: 7.75rem; }
+@media (min-width: 1200px) { body.dashboardDocument .withTabs .content-primary { padding-top: 4.75rem; } }
+body.dashboardDocument .content-primary :is(.sectionTitle, h1, h2, h3):not(.MuiTypography-h3):not(.MuiTypography-h6) { color: var(--nf-text); }
+body.dashboardDocument .content-primary .sectionTitle, body.dashboardDocument .content-primary h2.checkboxListLabel,
+body.dashboardDocument .content-primary h2.paperListLabel, body.dashboardDocument .content-primary h1.MuiTypography-h1,
+body.dashboardDocument .content-primary h2.MuiTypography-h2 {
+  font-weight: 700; letter-spacing: -.01em; color: var(--nf-text);
+}
+body.dashboardDocument .content-primary h1.MuiTypography-h1 { font-size: clamp(1.6rem, 2.4vw, 2rem); line-height: 1.2; }
+body.dashboardDocument .content-primary .sectionTitle, body.dashboardDocument .content-primary h2.MuiTypography-h2 { font-size: 1.35rem; margin: 1.6rem 0 .9rem; }
+body.dashboardDocument .content-primary :is(h2, h3):not(.MuiTypography-h6) { font-weight: 700; color: var(--nf-text); letter-spacing: -.01em; }
+body.dashboardDocument .content-primary h2:not(.MuiTypography-h1) { font-size: 1.35rem; }
+body.dashboardDocument .content-primary h3 { font-weight: 600; font-size: 1.1rem; }
+body.dashboardDocument .fieldDescription, body.dashboardDocument .content-primary .MuiFormHelperText-root, body.dashboardDocument .content-primary .MuiTypography-body2 { color: var(--nf-muted); }
+body.dashboardDocument .content-primary a:not(.emby-button):not(.MuiButtonBase-root):not(.listItem-border):not(.card):not(.cardImageContainer):not(.cardContent):not(.itemAction):not(.MuiLink-button) {
+  color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255, 255, 255, .45); transition: color var(--nf-ease), text-decoration-color var(--nf-ease);
+}
+body.dashboardDocument .content-primary .MuiLink-root, body.dashboardDocument .fieldDescription a { color: #fff; }
+@media (hover: hover) {
+  body.dashboardDocument .content-primary a:not(.emby-button):not(.MuiButtonBase-root):not(.listItem-border):not(.card):not(.cardImageContainer):not(.cardContent):not(.itemAction):hover { color: var(--nf-muted); text-decoration-color: var(--nf-red); }
+}
+
+/* ---- top bar (MUI AppBar): translucent #141414 background, bottom hairline ---- */
+body.dashboardDocument .MuiAppBar-root {
+  background: rgba(20, 20, 20, .92) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  color: var(--nf-text); box-shadow: none !important; border-bottom: 1px solid var(--dash-line);
+}
+body.dashboardDocument .MuiAppBar-root .MuiAvatar-root { background-color: var(--nf-red); color: #fff; transition: transform var(--nf-ease), box-shadow var(--nf-ease); }
+body.dashboardDocument .MuiAppBar-root .MuiIconButton-root { width: var(--dash-tap); height: var(--dash-tap); }
+@media (hover: hover) { body.dashboardDocument .MuiAppBar-root .MuiIconButton-root:hover .MuiAvatar-root { box-shadow: var(--nf-focus-ring); } }
+
+/* ---- drawer ---- */
+body.dashboardDocument .MuiDrawer-paper {
+  background: var(--nf-bg-deep) !important; background-image: none !important; color: var(--nf-text);
+  border-right: 1px solid var(--dash-line);
+}
+body.dashboardDocument .MuiDrawer-paper .MuiList-root { padding-top: 0; padding-bottom: .4rem; }
+/* header: red wordmark instead of the blue/purple logo */
+body.dashboardDocument .MuiDrawer-paper > .MuiList-root:first-child { padding-bottom: 0; }
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root:has(> .MuiListItemIcon-root > img) {
+  display: flex; flex-direction: column; align-items: flex-start; gap: .1rem; padding: 1.1rem 1.25rem .9rem;
+}
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root:has(> .MuiListItemIcon-root > img) .MuiListItemIcon-root { display: none; }
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root:has(> .MuiListItemIcon-root > img)::before {
+  content: 'JELLYFIN'; font: 2rem/1 var(--nf-font-logo); letter-spacing: .04em; color: var(--nf-red);
+}
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root:has(> .MuiListItemIcon-root > img) .MuiListItemText-primary { font-size: .95rem; font-weight: 600; margin: 0; }
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root:has(> .MuiListItemIcon-root > img) .MuiListItemText-secondary { font-size: .75rem; color: var(--nf-muted); }
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root:has(> .MuiListItemIcon-root > img) .MuiListItemText-root { margin: 0; }
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root:has(> .MuiListItemIcon-root > img):hover { background: transparent; }
+/* sections and rows */
+body.dashboardDocument .MuiListSubheader-root {
+  background: transparent !important; background-image: none !important; color: var(--nf-muted); font-size: .7rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase; line-height: 1; padding: 1.4rem 1.25rem .5rem;
+}
+body.dashboardDocument .MuiDrawer-paper .MuiListItem-root { padding: 0 .5rem; }
+body.dashboardDocument .MuiDrawer-paper .MuiList-root > .MuiListItemButton-root { margin: 0 .5rem; width: auto; }
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root {
+  position: relative; min-height: var(--dash-tap); border-radius: var(--dash-radius); color: var(--nf-muted);
+  transition: background-color var(--nf-ease), color var(--nf-ease);
+}
+body.dashboardDocument .MuiDrawer-paper .MuiListItemIcon-root { color: inherit; min-width: 40px; }
+body.dashboardDocument .MuiDrawer-paper .MuiListItemText-primary { font-weight: 500; font-size: .92rem; }
+@media (hover: hover) {
+  body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root:hover { background: var(--nf-hover-bg); color: #fff; }
+}
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root.Mui-selected { background: var(--nf-hover-bg); color: #fff; font-weight: 700; }
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root.Mui-selected .MuiListItemText-primary { font-weight: 700; }
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root.Mui-selected::before {
+  content: ''; position: absolute; left: 0; top: 22%; bottom: 22%; width: 3px; border-radius: 0 3px 3px 0; background: var(--nf-red);
+}
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root.Mui-selected .MuiListItemIcon-root { color: var(--nf-red); }
+body.dashboardDocument .MuiDrawer-paper .MuiListItemButton-root.Mui-focusVisible { background: var(--nf-hover-bg); box-shadow: var(--nf-focus-ring); color: #fff; }
+body.dashboardDocument .MuiDrawer-paper .MuiDivider-root { border-color: var(--dash-line); }
+body.dashboardDocument .MuiBackdrop-root:not(.MuiBackdrop-invisible) { background: rgba(0, 0, 0, .7); }
+
+/* ---- legacy fields (same style as login.css / profile.css) ---- */
+body.dashboardDocument .content-primary :is(.emby-input, .emby-textarea, .emby-select-withcolor),
+body.dashboardDocument :is(.dialog, .formDialog) :is(.emby-input, .emby-textarea, .emby-select-withcolor) {
+  background: var(--dash-field) !important; border: 1px solid transparent !important; border-radius: 6px !important;
+  color: #fff; box-shadow: none !important; transition: background-color var(--nf-ease), border-color var(--nf-ease);
+}
+body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .emby-input { height: 3.4rem; padding: 0 1rem; }
+body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .emby-textarea { padding: .8rem 1rem; }
+body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .emby-select-withcolor { padding-left: 1rem; min-height: 3.4rem; }
+body.dashboardDocument .emby-select-withcolor > option { background: var(--dash-surface-2); color: #fff; }
+body.dashboardDocument :is(.content-primary, .dialog, .formDialog) :is(.emby-input, .emby-textarea, .emby-select-withcolor):hover { background: var(--dash-field-hover) !important; }
+body.dashboardDocument :is(.content-primary, .dialog, .formDialog) :is(.emby-input, .emby-textarea, .emby-select-withcolor):focus { background: var(--dash-field-focus) !important; border-color: #fff !important; }
+body.dashboardDocument :is(.inputLabel, .selectLabel, .textareaLabel) { color: var(--nf-muted) !important; }
+body.dashboardDocument :is(.inputLabelFocused, .selectLabelFocused, .textareaLabelFocused) { color: #fff !important; }
+body.dashboardDocument .selectArrowContainer { color: var(--nf-muted); }
+body.dashboardDocument .selectArrowContainer .selectArrow { color: inherit; }
+body.dashboardDocument .emby-input::placeholder, body.dashboardDocument .emby-textarea::placeholder { color: rgba(255, 255, 255, .4); }
+body.dashboardDocument .inputContainer, body.dashboardDocument .selectContainer, body.dashboardDocument .textareaContainer { margin-bottom: 1.2rem; }
+
+/* checkboxes / sliders: accent is already red (accent.css), we only set the shape and the touch area */
+body.dashboardDocument .checkboxOutline { border-radius: 3px; border-color: rgba(255, 255, 255, .55); }
+body.dashboardDocument .emby-checkbox:checked + span + .checkboxOutline { background: var(--nf-red) !important; border-color: var(--nf-red) !important; }
+body.dashboardDocument .emby-checkbox + span + .checkboxOutline .checkboxIcon { color: #fff; }
+body.dashboardDocument .checkboxContainer { color: var(--nf-text); min-height: 2.2rem; }
+body.dashboardDocument .checkboxContainer .checkboxLabel { color: var(--nf-text); }
+body.dashboardDocument .checkboxList, body.dashboardDocument .paperList {
+  background: var(--dash-surface); border-radius: var(--nf-radius-card); border: 1px solid var(--dash-line); padding: .6rem 1rem;
+}
+body.dashboardDocument .paperList .listItem, body.dashboardDocument .paperList .listItem-border { background: transparent; }
+body.dashboardDocument .mdl-slider-container { color: var(--nf-text); }
+body.dashboardDocument .mdl-slider-background-flex, body.dashboardDocument .mdl-slider-background-upper { background-color: rgba(255, 255, 255, .25); }
+
+/* fieldsets (Networking: "Server Address Settings"): card, not a white frame */
+body.dashboardDocument fieldset.verticalSection, body.dashboardDocument .content-primary fieldset {
+  border: 1px solid var(--dash-line) !important; border-radius: var(--nf-radius-card); background: var(--dash-surface);
+  padding: 1rem 1.4rem 1.2rem; margin: 1.4rem 0; min-width: 0;
+}
+body.dashboardDocument fieldset legend, body.dashboardDocument .content-primary fieldset legend {
+  font-size: 1.05rem; font-weight: 700; color: #fff; padding: 0 .6rem; background: transparent;
+}
+
+/* ---- legacy buttons ---- */
+body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .emby-button.raised {
+  border-radius: 999px; text-transform: none; font-weight: 600; background: var(--nf-pill); color: #fff; box-shadow: none;
+  min-height: 2.9rem; padding: .6rem 1.8rem; transition: background-color var(--nf-ease), transform var(--nf-ease);
+}
+body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .emby-button.raised.block { width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; margin-top: .6rem; }
+body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .emby-button.raised:not(.button-submit) { background: var(--nf-pill); }
+body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .emby-button.button-submit, body.dashboardDocument .emby-button.btnDarkAccent {
+  background: var(--nf-red); color: #fff;
+}
+@media (hover: hover) {
+  body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .emby-button.raised:not(.button-submit):hover { background: var(--nf-pill-hover); }
+  body.dashboardDocument :is(.content-primary, .dialog, .formDialog) .emby-button.button-submit:hover { background: var(--nf-red-hover); }
+}
+body.dashboardDocument .emby-button.button-link, body.dashboardDocument .emby-button.button-flat { color: #fff; text-transform: none; font-weight: 600; }
+body.dashboardDocument .paper-icon-button-light { color: var(--nf-muted); }
+body.dashboardDocument .paper-icon-button-light:disabled { opacity: .4; }
+
+/* ---- legacy lists ---- */
+body.dashboardDocument .listItem { border-radius: var(--dash-radius); transition: background-color var(--nf-ease); }
+body.dashboardDocument .listItem-border { border-color: var(--dash-line) !important; }
+@media (hover: hover) { body.dashboardDocument .listItem-shaded:hover, body.dashboardDocument a.listItem:hover, body.dashboardDocument .listItem-button:hover { background: var(--nf-hover-bg); } }
+body.dashboardDocument .listItemIcon:not(.listItemIcon-transparent) { background-color: #3a3a3a; color: #fff; }
+body.dashboardDocument .listItemBodyText { color: var(--nf-text); }
+body.dashboardDocument .listItemBodyText-secondary, body.dashboardDocument .secondary { color: var(--nf-muted); }
+
+/* ---- legacy tabs: .localnav (user edit page) and .emby-tabs (tabbed pages) ---- */
+body.dashboardDocument .localnav {
+  display: flex; flex-wrap: nowrap; overflow-x: auto; gap: .4rem; background: transparent; padding: .2rem 0 .4rem; margin: .4rem 0 1.4rem;
+  border-bottom: 1px solid var(--dash-line); scrollbar-width: none;
+}
+body.dashboardDocument .localnav::-webkit-scrollbar { display: none; }
+body.dashboardDocument .localnav > a.emby-button {
+  flex: none; min-height: var(--dash-tap); display: inline-flex !important; align-items: center; padding: 0 1.1rem; border-radius: 999px !important; margin: 0 !important;
+  background: transparent !important; color: var(--nf-muted) !important; font-weight: 600; text-transform: none; text-decoration: none; box-shadow: none !important;
+  transition: background-color var(--nf-ease), color var(--nf-ease);
+}
+body.dashboardDocument .localnav > a.emby-button.ui-btn-active { background: var(--nf-text) !important; color: #141414 !important; }
+@media (hover: hover) {
+  body.dashboardDocument .localnav > a.emby-button:not(.ui-btn-active):hover { background: var(--nf-hover-bg) !important; color: #fff !important; }
+  body.dashboardDocument .localnav > a.emby-button.ui-btn-active:hover { background: var(--nf-light-hover) !important; }
+}
+body.dashboardDocument .localnav > a.emby-button:focus-visible { box-shadow: var(--nf-focus-ring) !important; outline: 0; }
+body.dashboardDocument .lnkEditUserPreferencesContainer { margin: 0 0 1rem; }
+body.dashboardDocument .disabledUserBanner .btnStatic { background: var(--nf-red); color: #fff; border-radius: var(--dash-radius); }
+
+/* ---- legacy dialogs (.dialog / .formDialog: add library, editors, folder pickers): same surfaces as the MUI dialogs ---- */
+body.dashboardDocument .dialog, body.dashboardDocument .formDialog { background: #181818; color: var(--nf-text); border: 1px solid var(--dash-line); border-radius: 14px; box-shadow: 0 24px 64px rgba(0, 0, 0, .8); overflow: hidden; }
+body.dashboardDocument .dialog.dialog-fullscreen, body.dashboardDocument .formDialog.dialog-fullscreen-lowres { border-radius: 0; border: 0; }
+body.dashboardDocument .formDialogHeader { background: transparent; border-bottom: 1px solid var(--dash-line); min-height: 3.6rem; }
+body.dashboardDocument .formDialogHeaderTitle { font-weight: 700; font-size: 1.15rem; }
+body.dashboardDocument .formDialogFooter { background: transparent; border-top: 1px solid var(--dash-line); }
+body.dashboardDocument .dialogBackdrop.dialogBackdropOpened { background: rgba(0, 0, 0, .7); }
+body.dashboardDocument .formDialogContent .sectionTitle, body.dashboardDocument .formDialogContent h2 { font-weight: 700; font-size: 1.3rem; }
+body.dashboardDocument .actionSheet, body.dashboardDocument .actionSheetContent { background: #232323; border: 1px solid var(--dash-line); border-radius: 10px; color: #fff; }
+body.dashboardDocument .actionSheetMenuItem { border-radius: 6px; min-height: 2.75rem; }
+@media (max-width: 599.95px) { body.dashboardDocument .dialog.dialog-fullscreen-lowres, body.dashboardDocument .formDialog.dialog-fullscreen-lowres { border-radius: 0; border: 0; } }

@@ -1,0 +1,5 @@
+*.png
+!docs/screenshots/*.png
+.superpowers/
+docs/superpowers/
+.DS_Store
